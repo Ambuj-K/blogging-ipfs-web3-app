@@ -12,4 +12,4 @@ Blogs posted on IPFS as NFTs via pinãta, through sevlte frontend, minted via ba
 
 Alchemy-apis library on svelte to get Blogs by user posted on IPFS as NFTs
 
-
+App Minimum charge to post blogs
