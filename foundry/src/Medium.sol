@@ -13,8 +13,6 @@ contract Medium is ERC721, ERC721URIStorage, Ownable {
 
     uint256 public fees;
 
-    event owner_address(address);
-
     constructor(
         uint256 _fees
         ) ERC721("MediumIpfs", "MI") {
@@ -24,9 +22,7 @@ contract Medium is ERC721, ERC721URIStorage, Ownable {
     function safeMint(address to, string memory uri) public payable {
 
         require(msg.value >= fees, "Not Enough Eth");
-        emit owner_address(owner());
         payable(owner()).transfer(fees);
-
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
