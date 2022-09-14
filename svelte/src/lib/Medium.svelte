@@ -28,8 +28,8 @@
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                pinata_secret_api_key: '08fefdccf72fe6bd2bd5e0da2ad39d7eac7003fd51dbca5aa662b4606573f77c',
-                pinata_api_key: '2f185cf6f8d390182ef4'
+                pinata_secret_api_key: '',
+                pinata_api_key: ''
             },
             body: JSON.stringify(info)
         });
