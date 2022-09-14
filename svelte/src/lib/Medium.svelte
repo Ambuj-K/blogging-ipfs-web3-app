@@ -1,11 +1,4 @@
 <script>
-    import {ethers} from 'ethers';
-    import { create } from 'ipfs-http-client'; 
-    /* or a string */
-    // const added = await client.add('hello world')
-
-    import { Network, Alchemy } from "alchemy-sdk";
-
     export let web3Props = { 
         provider: null, 
         signer: null, 
@@ -14,45 +7,29 @@
         contract: null 
     };
 
-    const settings = {
-    apiKey: "",
-    network: Network.ETH_GOERLI,
-    };
+    $: title
+    $: text
+    $: hash
 
-    const alchemy = new Alchemy(settings);
-
-    const ownerAddr = account;
-    console.log("fetching NFTs for address:", ownerAddr);
-    console.log("...");
-
-    const nftsForOwner = await alchemy.nft.getNftsForOwner(ownerAddr);
-    console.log("number of NFTs found:", nftsForOwner.totalCount);
-    console.log("...");
-
-    for (const nft of nftsForOwner.ownedNfts) {
-    console.log("===");
-    console.log("contract address:", nft.contract.address);
-    console.log("token ID:", nft.tokenId);
-    }
-    console.log("===");
-
-    const info = {
-        "description": "", 
+    const json_uri_info = {
+        "description": "Blog As NFT", 
         "external_url": "", 
-        "image": "", 
-        "name": "",
-        "attributes": [], 
+        "image": "ipfs://QmV7erPeurh4RytqBtN8pd5UzsS5msdw9japDeejiMNndz/Astronaut.jpg"
     }
 
-    const pinJSONToIPFS = async () => {
+    const json_blog_info = {
+        "title": title, 
+        "text": text
+    }
+
+    const pinJSONToIPFS = async (info) => {
         const url = `https://api.pinata.cloud/pinning/pinJSONToIPFS`;
-        info.image = base64Img
         const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                pinata_api_key: pinataApiKey,
-                pinata_secret_api_key: pinataSecretApiKey
+                pinata_secret_api_key: '08fefdccf72fe6bd2bd5e0da2ad39d7eac7003fd51dbca5aa662b4606573f77c',
+                pinata_api_key: '2f185cf6f8d390182ef4'
             },
             body: JSON.stringify(info)
         });
@@ -61,22 +38,29 @@
         console.log(hash)
     }
 
-    let base64Img, fileinput;
+    // let base64Img, fileinput;
 
-    const onFileSelected =(e)=>{
-    let image = e.target.files[0];
-            let reader = new FileReader();
-            reader.readAsDataURL(image);
-            reader.onload = e => {
-                 base64Img = e.target.result
-            };
+    // const onFileSelected =(e)=>{
+    // let image = e.target.files[0];
+    //         let reader = new FileReader();
+    //         reader.readAsDataURL(image);
+    //         reader.onload = e => {
+    //              base64Img = e.target.result
+    //         };
+    // }
+
+    const uploadFile = async() => {
+        pinJSONToIPFS(json_blog_info);
+        json_uri_info.external_url = "ipfs://"+hash
+        pinJSONToIPFS(json_uri_info);
+        web3Props.contract.safeMint(web3Props.account,"ipfs://"+hash);
     }
 
 
 </script>
 
 <div class="uploadandmint">
-    <input style="display:none" type="file" accept=".jpg, .jpeg, .png" on:change={(e)=>onFileSelected(e)} bind:this={fileinput} >
+    <!-- <input style="display:none" type="file" accept=".jpg, .jpeg, .png" on:change={(e)=>onFileSelected(e)} bind:this={fileinput} >
     <div class="card-body items-center text-center">
       <h2 class="card-title">Upload an Image</h2>
       <p>Please use .jpg, .jpeg, and .png only</p>
@@ -87,8 +71,96 @@
         <button class="btn btn-primary" on:click={()=>{pinJSONToIPFS(info)}}>Save to IPFS</button>
         {/if}
     </div>
-    </div>
+    </div> -->
+    <div>
+        <form onSubmit={uploadFile} className="writeForm">
+          <div className="writeFormGroup">
+          <input
+              className="writeInput"
+              placeholder="Title"
+              type="text"
+              autoFocus={true}
+              bind:value={title}
+            />
+          </div>
+          <div className="writeFormGroup">
+          <textarea
+              className="writeInput writeText"
+              placeholder="Tell your story..."
+              autoFocus={true}
+              bind:value={text}
+            />
+          </div>
+          <button className="writeSubmit" type="submit">
+            Publish
+          </button>
+        </form>
+      </div>
     {#if hash}
         <a href="https://gateway.pinata.cloud/ipfs/{hash}" class="link">IPFS Gateway to CID</a>
     {/if}
 </div>
+
+<style>
+.writeForm {
+    position: relative;
+    margin-top: 30px;
+  }
+  
+  .writeFormGroup {
+    margin-left: 150px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .writeIcon {
+    width: 25px;
+    height: 25px;
+    font-size: 20px;
+    border: 1px solid;
+    border-radius: 50%;
+    color: rgb(129, 125, 125);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  .writeInput {
+    font-size: 30px;
+    border: none;
+    padding: 20px;
+    width: 70vw;
+  }
+  
+  .writeInput::placeholder {
+    color: rgb(189, 185, 185);
+    font-weight: 400;
+  }
+  
+  .writeInput:focus {
+    outline-style: none;
+  }
+  
+  .writeText {
+    width: 70vw;
+    height: 100vh;
+    font-family: inherit;
+    font-size: 20px;
+  }
+  
+  .writeSubmit {
+    position: absolute;
+    top: 20px;
+    right: 50px;
+    color: white;
+    background-color: teal;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+</style>

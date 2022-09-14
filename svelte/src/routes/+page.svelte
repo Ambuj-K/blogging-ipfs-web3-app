@@ -1,6 +1,7 @@
 <script>
     import WalletConnect from "../lib/WalletConnect.svelte";
     import Medium from "../lib/Medium.svelte"
+    import MyBlogs from "../lib/MyBlogs.svelte"
     import contractAbi from "../contracts/Medium.json";
     const contractAddr =  "";
     export let web3Props = {
@@ -18,6 +19,7 @@
 <WalletConnect bind:web3Props {contractAddr} {contractAbi} />
 {:else}
 <Medium bind:web3Props />
+<MyBlogs bind:web3Props />
 {/if}
 
 <style>
