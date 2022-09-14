@@ -1,4 +1,5 @@
 <script>
+    import {ethers} from 'ethers';
     export let web3Props = { 
         provider: null, 
         signer: null, 
@@ -7,9 +8,9 @@
         contract: null 
     };
 
-    $: title
-    $: text
-    $: hash
+    $: title = ''
+    $: text = ''
+    var hash = ''
 
     const json_uri_info = {
         "description": "Blog As NFT", 
@@ -18,8 +19,9 @@
     }
 
     const json_blog_info = {
-        "title": title, 
-        "text": text
+        "name": "Blog Post",
+        "title": "", 
+        "text": ""
     }
 
     const pinJSONToIPFS = async (info) => {
@@ -50,10 +52,18 @@
     // }
 
     const uploadFile = async() => {
-        pinJSONToIPFS(json_blog_info);
+        json_blog_info.title = title;
+        json_blog_info.text = text;
+        await pinJSONToIPFS(json_blog_info);
         json_uri_info.external_url = "ipfs://"+hash
-        pinJSONToIPFS(json_uri_info);
-        web3Props.contract.safeMint(web3Props.account,"ipfs://"+hash);
+        await pinJSONToIPFS(json_uri_info);
+        console.log("ipfs://"+hash)
+        await web3Props.contract.safeMint(
+            web3Props.account,
+            "ipfs://"+hash, 
+            {
+                value: ethers.utils.parseEther("0.02"),
+            });
     }
 
 
@@ -73,7 +83,6 @@
     </div>
     </div> -->
     <div>
-        <form onSubmit={uploadFile} className="writeForm">
           <div className="writeFormGroup">
           <input
               className="writeInput"
@@ -91,10 +100,9 @@
               bind:value={text}
             />
           </div>
-          <button className="writeSubmit" type="submit">
+          <button className="writeSubmit" type="reset" on:click={uploadFile}>
             Publish
           </button>
-        </form>
       </div>
     {#if hash}
         <a href="https://gateway.pinata.cloud/ipfs/{hash}" class="link">IPFS Gateway to CID</a>

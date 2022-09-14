@@ -3,7 +3,7 @@
     import Medium from "../lib/Medium.svelte"
     import MyBlogs from "../lib/MyBlogs.svelte"
     import contractAbi from "../contracts/Medium.json";
-    const contractAddr =  "";
+    const contractAddr =  "0x007858d81f652DE257C81ca21B176E60B69d5f4b";
     export let web3Props = {
         provider : null,
         signer : null,
@@ -13,7 +13,7 @@
 </script>
 
 <div class="OUTER">
-<h1>Play with Your Pet Emoji</h1>
+<h1>Medium Blogs</h1>
 </div>
 {#if !web3Props.account}
 <WalletConnect bind:web3Props {contractAddr} {contractAbi} />

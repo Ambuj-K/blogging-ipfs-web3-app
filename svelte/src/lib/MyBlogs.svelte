@@ -29,8 +29,12 @@
 
         for (const nft of nftsForOwner.ownedNfts) {
         console.log("===");
-        console.log("contract address:", nft.contract.address);
-        console.log("token ID:", nft.tokenId);
+        const response = await alchemy.nft.getNftMetadata(
+        nft.contract.address, nft.tokenId);
+        if (response.rawMetadata.description == "Blog As NFT"){
+            console.log("contract address:", nft.contract.address);
+            console.log("token ID:", nft.tokenId);
+        }
         }
         console.log("===");
     }

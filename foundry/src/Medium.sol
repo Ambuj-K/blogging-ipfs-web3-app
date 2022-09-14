@@ -13,10 +13,8 @@ contract Medium is ERC721, ERC721URIStorage, Ownable {
 
     uint256 public fees;
 
-    constructor(
-        uint256 _fees
-        ) ERC721("MediumIpfs", "MI") {
-        fees = _fees;
+    constructor() ERC721("MediumIpfs", "MI") {
+        fees = 0.01 ether;
     }
 
     function safeMint(address to, string memory uri) public payable {

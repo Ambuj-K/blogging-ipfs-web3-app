@@ -9,4 +9,4 @@ read -s rpc
 echo Which contract do you want to deploy \(eg Greeter\)?
 read contract
 
-forge create ./src/${contract}.sol:${contract} -i --rpc-url $rpc --constructor-args 1 eth
+forge create ./src/${contract}.sol:${contract} -i --rpc-url $rpc

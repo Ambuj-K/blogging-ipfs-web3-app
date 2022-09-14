@@ -7,7 +7,7 @@ import "../src/Medium.sol";
 contract MediumTest is DSTest {
     Medium public md;
     function setUp() public {
-        md = new Medium(1 ether);
+        md = new Medium();
         address addr = 0x1234567890123456789012345678901234567890;
         md.safeMint{value: 2 ether}(addr, "ipfs://QmYgb3tawCnMGPMV4DGFawNznEBzoFNXsZNwvTPDB4mZxc");
     }
