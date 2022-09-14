@@ -12,7 +12,7 @@
 
     //get NFTS
     const settings = {
-    apiKey: "xXljex9ya0BwLoQFs30xWLHRlmWkrX6I",
+    apiKey: "",
     network: Network.ETH_GOERLI,
     };
 
