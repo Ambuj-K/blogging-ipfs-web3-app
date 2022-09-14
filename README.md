@@ -2,11 +2,11 @@
 
 Blockchain Medium Web3 app, with content hosted using IPFS.
 
-Unit test coverge - Almost done
+Unit test coverge - ✅
 
 WIP - Optimising for Gas after initial changes - Almost Done
 
-WIP - Svelte - Basic Frontend - WIP
+WIP - Svelte - Basic Frontend - Almost done
 
 Blogs posted on IPFS as NFTs via pinãta, through sevlte frontend, minted via backend
 
