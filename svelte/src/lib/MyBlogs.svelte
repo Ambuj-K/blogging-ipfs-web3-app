@@ -10,6 +10,8 @@
         contract: null 
     };
 
+    $: blogs = []
+
     //get NFTS
     const settings = {
     apiKey: "",
@@ -18,28 +20,32 @@
 
     const alchemy = new Alchemy(settings);
 
-    async function log_nfts(){
+    async function get_blog_nfts(){
         const ownerAddr = web3Props.account;
-        console.log("fetching NFTs for address:", ownerAddr);
-        console.log("...");
-
         const nftsForOwner = await alchemy.nft.getNftsForOwner(ownerAddr);
-        console.log("number of NFTs found:", nftsForOwner.totalCount);
-        console.log("...");
 
         for (const nft of nftsForOwner.ownedNfts) {
-        console.log("===");
-        const response = await alchemy.nft.getNftMetadata(
-        nft.contract.address, nft.tokenId);
-        if (response.rawMetadata.description == "Blog As NFT"){
-            console.log("contract address:", nft.contract.address);
-            console.log("token ID:", nft.tokenId);
+            const response = await alchemy.nft.getNftMetadata(
+            nft.contract.address, nft.tokenId);
+            if (response.rawMetadata.description == "Blog As NFT"){
+                const blog_response = await fetch("https://api.ipfsbrowser.com/ipfs/get.php?hash="+response.rawMetadata.external_url.split("//")[1]);
+                const data = await blog_response.json();
+                blogs = [...blogs, [data["title"], data["text"]]];
+            }
         }
-        }
-        console.log("===");
     }
+    get_blog_nfts()
 </script>
 
 <br/>
 <br/>
-<button class='bttn' on:click={log_nfts}>Log NFTs</button>
+{#if blogs.length!=0}
+    <b>Your Blogs</b>    
+    <div>
+        {#each blogs as blog}
+            <div>Title: {blog[0]}</div>
+            <div>Text: {blog[1]}</div>
+        {/each} 
+    </div>
+{/if}
+<!-- <button class='bttn' on:click={get_blog_nfts}>Log NFTs</button> -->
