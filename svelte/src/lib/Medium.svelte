@@ -30,7 +30,7 @@
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                pinata_secret_api_key: '',
+                pinata_secret_api_key:'',
                 pinata_api_key: ''
             },
             body: JSON.stringify(info)
@@ -82,7 +82,7 @@
         {/if}
     </div>
     </div> -->
-    <div>
+    <div class="accordion">
           <div className="writeFormGroup">
           <input
               className="writeInput"
@@ -90,6 +90,8 @@
               type="text"
               autoFocus={true}
               bind:value={title}
+              size="50"
+              height="20"
             />
           </div>
           <div className="writeFormGroup">
@@ -98,24 +100,38 @@
               placeholder="Tell your story..."
               autoFocus={true}
               bind:value={text}
+              rows="20" 
+              cols="170"
             />
           </div>
           <button className="writeSubmit" type="reset" on:click={uploadFile}>
             Publish
           </button>
-      </div>
+    </div>
     {#if hash}
         <a href="https://gateway.pinata.cloud/ipfs/{hash}" class="link">IPFS Gateway to CID</a>
     {/if}
 </div>
 
 <style>
+.accordion {
+  background-color: white;
+  color: black;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .writeForm {
     position: relative;
     margin-top: 30px;
   }
   
   .writeFormGroup {
+    width: 250px;
+    height: 250px;
     margin-left: 150px;
     display: flex;
     align-items: center;
@@ -135,10 +151,12 @@
   }
   
   .writeInput {
+    width: 225px;
+    height: 225px;
     font-size: 30px;
     border: none;
-    padding: 20px;
-    width: 70vw;
+    padding: 200px;
+    width: 700vw;
   }
   
   .writeInput::placeholder {
@@ -151,8 +169,8 @@
   }
   
   .writeText {
-    width: 70vw;
-    height: 100vh;
+    width: 700vw;
+    height: 1000vh;
     font-family: inherit;
     font-size: 20px;
   }
@@ -170,5 +188,6 @@
     cursor: pointer;
     display: flex;
     align-items: center;
+    height: 50px
   }
 </style>

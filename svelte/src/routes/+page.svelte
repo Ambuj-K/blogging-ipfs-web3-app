@@ -18,6 +18,7 @@
 {#if !web3Props.account}
 <WalletConnect bind:web3Props {contractAddr} {contractAbi} />
 {:else}
+<br/>
 <Medium bind:web3Props />
 <MyBlogs bind:web3Props />
 {/if}
@@ -28,7 +29,7 @@
         padding: 20px;
         overflow: hidden;
         position: relative;
-        background-color: rgb(214, 226, 43);
+        background-color: rgb(231, 146, 20);
         box-shadow: 1px 4px 1px rgba(0,0,0,0.3);
     }
 </style>
