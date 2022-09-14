@@ -1,6 +1,6 @@
-# medium-ipfs-web3-app
+# blogging-ipfs-web3-app
 
-Blockchain Medium Web3 app, with content hosted using IPFS.
+Blockchain Blogging Web3 app, with content hosted using IPFS.
 
 Unit test coverge - ✅
 
