@@ -14,6 +14,7 @@ WIP - Svelte - Basic Frontend - ✅
 
 ###### App Minimum charge to post blogs - 0.02 ETH
 
-Demo Link - [Medium IPFS](https://mediumifpsblogs.ambujkumar4.repl.co/)
+Demo Link - [Blogs](https://blogsipfs.ambujkumar4.repl.co/)
 
-<img width="1000" alt="Screenshot 2022-09-14 at 6 07 55 PM" src="https://user-images.githubusercontent.com/43566170/190159044-c9c4ded7-6077-4a2e-80c1-c1d02904e739.png">
+![image](https://user-images.githubusercontent.com/43566170/190202387-4bbb83b3-64cf-46ad-a543-4649e7ad8d73.png)
+
